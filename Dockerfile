@@ -6,6 +6,9 @@ WORKDIR /app
 # Spring 소스 코드를 이미지에 복사
 COPY . .
 
+# gradlew 실행 권한 부여
+RUN chmod +x gradlew
+
 # gradlew를 이용한 프로젝트 빌드
 RUN ./gradlew clean build
 
