@@ -1,0 +1,5 @@
+namespace: krampoline
+resources:
+  - service.yaml
+  - backend.yaml
+  - ingress.yaml
