@@ -1,5 +1,10 @@
 namespace: krampoline
 resources:
-  - service.yaml
+  - mariadb.yaml
   - backend.yaml
+  - service.yaml
   - ingress.yaml
+configMapGenerator:
+  - name: init-db
+    files:
+      - configs/init.sql
