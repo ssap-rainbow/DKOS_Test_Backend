@@ -57,9 +57,20 @@ kind: Service
 metadata:
   name: mariadb
 spec:
-  type: ClusterIP
-  clusterIP: None # Headless
+  type: LoadBalancer
   selector:
     app: mariadb
   ports:
     - port: 3306
+
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: mariadb
+# spec:
+#   type: ClusterIP
+#   clusterIP: None # Headless
+#   selector:
+#     app: mariadb
+#   ports:
+#     - port: 3306
