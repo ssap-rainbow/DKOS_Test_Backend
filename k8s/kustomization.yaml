@@ -2,6 +2,7 @@ namespace: krampoline
 resources:
   - mariadb.yaml
   - backend.yaml
+  - frontend.yaml
   - service.yaml
   - ingress.yaml
 configMapGenerator:
