@@ -25,6 +25,10 @@ spec:
               value: Asia/Seoul
             - name: DATABASE_URL
               value: jdbc:mariadb://mariadb:3306/krampoline
+            - name: DATABASE_USERNAME
+              value: root
+            - name: DATABASE_PASSWORD
+              value: root            
           resources:
             requests:
               memory: 1Gi
