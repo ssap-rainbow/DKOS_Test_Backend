@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import shop.ssap.ssap.repository.SampleData;
 import shop.ssap.ssap.repository.SampleDataRepository;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*") 
 @Controller
@@ -25,13 +24,13 @@ public class HomeController {
     @RequestMapping(value="/api/home", method= RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<String> home() {
-        List<SampleData> sampleDataList = sampleDataRepository.findAll();
-
-        // sampleDataList에서 detail 값을 추출하여 하나의 문자열로 결합
-        String result = sampleDataList.stream()
-                .map(SampleData::getDetail)
-                .collect(Collectors.joining(" "));
-
-        return ResponseEntity.ok(result);
+        // "Hello DKOS!" 값을 가진 데이터만 검색
+        Optional<SampleData> helloDkosData = sampleDataRepository.findByDetail("Hello DKOS!");
+        
+        if (helloDkosData.isPresent()) {
+            return ResponseEntity.ok(helloDkosData.get().getDetail());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
