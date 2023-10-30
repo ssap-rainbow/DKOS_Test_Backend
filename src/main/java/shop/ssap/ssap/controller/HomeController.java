@@ -1,11 +1,9 @@
 package shop.ssap.ssap.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import shop.ssap.ssap.repository.SampleData;
 import shop.ssap.ssap.repository.SampleDataRepository;
 
@@ -13,6 +11,7 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*") 
 @Controller
+@Tag(name = "Home 컨트롤러", description = "HOME API입니다.")
 public class HomeController {
 
     private final SampleDataRepository sampleDataRepository;
@@ -20,6 +19,20 @@ public class HomeController {
     public HomeController(SampleDataRepository sampleDataRepository) {
         this.sampleDataRepository = sampleDataRepository;
     }
+
+    @RequestMapping(value = "/api/hello", method = RequestMethod.GET)
+    @ResponseBody
+    public String hello() {
+        return "hello";
+    }
+
+    @RequestMapping(value = "/api/greeting", method = RequestMethod.POST)
+    @ResponseBody
+    public String greeting(@RequestBody String name) {
+        return "Hello, " + name + "!";
+    }
+
+
 
     @RequestMapping(value="/api/home", method= RequestMethod.GET)
     @ResponseBody
