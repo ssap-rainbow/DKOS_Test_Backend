@@ -27,11 +27,12 @@ public class S3Config {
     @Value("${AWS_SECRET_ACCESS_KEY}")
     private String secretKey;
 
-    @Value("${proxy.host}")
+    @Value("${PROXY_HOST}")
     private String proxyHost;
 
-    @Value("${proxy.port}")
+    @Value("${PROXY_PORT}")
     private int proxyPort;
+
 
     @Bean
     public S3Client s3Client() {
