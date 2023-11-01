@@ -20,7 +20,7 @@ public class FileUploadController {
     @Autowired
     private S3Client s3Client;
 
-    @Value("${AWS_S3_BUCKET}")
+    @Value("${AWS_S3_BUCKET:defaultBucket}")
     private String bucketName;
 
     @PostMapping("/upload")
