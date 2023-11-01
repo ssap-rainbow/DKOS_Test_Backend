@@ -43,6 +43,27 @@ spec:
                 secretKeyRef:
                   name: db-credentials
                   key: password
+            # 추가된 AWS 환경 변수
+            - name: AWS_S3_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: AWS_S3_BUCKET
+            - name: AWS_REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: AWS_REGION
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: AWS_SECRET_ACCESS_KEY
           resources:
             requests:
               memory: 1Gi
