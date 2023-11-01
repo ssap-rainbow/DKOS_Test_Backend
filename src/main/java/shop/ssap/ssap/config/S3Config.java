@@ -15,23 +15,23 @@ import java.net.URI;
 
 @Configuration
 public class S3Config {
-    @Value("${AWS_S3_BUCKET:defaultBucket}}")
+    @Value("${AWS_S3_BUCKET:defaultS3Bucket}")
     private String bucketName;
-
-    @Value("${AWS_REGION:defaultBucket}}")
+    
+    @Value("${AWS_REGION:us-west-2}")
     private String region;
-
-    @Value("${AWS_ACCESS_KEY_ID:defaultBucket}}")
+    
+    @Value("${AWS_ACCESS_KEY_ID:defaultAccessKeyId}")
     private String accessKeyId;
-
-    @Value("${AWS_SECRET_ACCESS_KEY:defaultBucket}}")
+    
+    @Value("${AWS_SECRET_ACCESS_KEY:defaultSecretKey}")
     private String secretKey;
-
-    @Value("${PROXY_HOST:defaultBucket}}")
+    
+    @Value("${PROXY_HOST:defaultProxyHost}")
     private String proxyHost;
-
-    @Value("${PROXY_PORT:defaultBucket}}")
-    private int proxyPort;
+    
+    @Value("${PROXY_PORT:8080}")
+    private int proxyPort;    
 
     @Bean
     public S3Client s3Client() {
