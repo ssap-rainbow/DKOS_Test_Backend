@@ -20,8 +20,8 @@ public class FileUploadController {
     @Autowired
     private S3Client s3Client;
 
-    // @Value("${AWS_S3_BUCKET}")
-    // private String bucketName;
+    @Value("${AWS_S3_BUCKET}")
+    private String bucketName;
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
