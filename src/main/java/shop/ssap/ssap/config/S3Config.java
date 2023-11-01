@@ -33,7 +33,6 @@ public class S3Config {
     @Value("${PROXY_PORT}")
     private int proxyPort;
 
-
     @Bean
     public S3Client s3Client() {
         SdkHttpClient httpClient = ApacheHttpClient.builder()
