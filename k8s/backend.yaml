@@ -84,11 +84,11 @@ spec:
                 configMapKeyRef:
                   name: app-config
                   key: SPRINGDOC_SWAGGER_UI_PATH         
-            - name: SPRING_AUTOCONFIGURE_EXCLUDE
+            - name: SERVER_FORWARD_HEADERS_STRATEGY
               valueFrom:
                 configMapKeyRef:
                   name: app-config
-                  key: SPRING_AUTOCONFIGURE_EXCLUDE
+                  key: SERVER_FORWARD_HEADERS_STRATEGY
                   
           resources:
             requests:
