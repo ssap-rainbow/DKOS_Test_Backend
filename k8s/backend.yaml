@@ -83,7 +83,13 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: app-config
-                  key: SPRINGDOC_SWAGGER_UI_PATH                  
+                  key: SPRINGDOC_SWAGGER_UI_PATH         
+            - name: SPRING_AUTOCONFIGURE_EXCLUDE
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: SPRING_AUTOCONFIGURE_EXCLUDE
+                  
           resources:
             requests:
               memory: 1Gi
