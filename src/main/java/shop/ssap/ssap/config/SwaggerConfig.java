@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @OpenAPIDefinition(
         info = @Info(title = "SSAP 심부름 플랫폼 API 명세서",
                 description = "SSAP 심부름 플랫폼 API 명세서",
-                version = "v3"))
+                version = "v1"))
 @Configuration
 public class SwaggerConfig {
     @Bean
@@ -19,6 +19,6 @@ public class SwaggerConfig {
                 .info(new io.swagger.v3.oas.models.info.Info()
                         .title("SSAP 심부름 플랫폼 API 명세서")
                         .description("SSAP 심부름 플랫폼 API 명세서")
-                        .version("v3"));
+                        .version("v1"));
     }          
 }
