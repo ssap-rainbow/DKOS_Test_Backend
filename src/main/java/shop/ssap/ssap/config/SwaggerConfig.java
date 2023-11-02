@@ -1,35 +1,24 @@
 package shop.ssap.ssap.config;
 
-// import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-// import io.swagger.v3.oas.annotations.info.Info;
-// import io.swagger.v3.oas.models.OpenAPI;
-// import org.springframework.context.annotation.Bean;
-// import org.springframework.context.annotation.Configuration;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-// @OpenAPIDefinition(
-//         info = @Info(title = "SSAP 심부름 플랫폼 API 명세서",
-//                 description = "SSAP 심부름 플랫폼 API 명세서",
-//                 version = "v1"))
+
+@OpenAPIDefinition(
+        info = @Info(title = "SSAP 심부름 플랫폼 API 명세서",
+                description = "SSAP 심부름 플랫폼 API 명세서",
+                version = "v1"))
 @Configuration
 public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI() {
-    //     return new OpenAPI()
-    //             .info(new io.swagger.v3.oas.models.info.Info()
-    //                     .title("SSAP 심부름 플랫폼 API 명세서")
-    //                     .description("SSAP 심부름 플랫폼 API 명세서")
-    //                     .version("v1"));
-    // }
-        Info info = new Info()
-                .version("v1.0.0")
-                .title("Project 6s - IDE Project")
-                .description("this APIs are consist of ChatController and UserController");
-
         return new OpenAPI()
-                .info(info);
-    }            
+                .info(new io.swagger.v3.oas.models.info.Info()
+                        .title("SSAP 심부름 플랫폼 API 명세서")
+                        .description("SSAP 심부름 플랫폼 API 명세서")
+                        .version("v1"));
+    }          
 }
