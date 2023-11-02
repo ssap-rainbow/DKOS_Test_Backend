@@ -70,6 +70,7 @@ spec:
                   name: app-config
                   key: PROXY_HOST
             - name: PROXY_PORT
+            # Logging 환경 변수 추가
               valueFrom:
                 configMapKeyRef:
                   name: app-config
@@ -80,16 +81,11 @@ spec:
                   name: app-config
                   key: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB
             - name: SPRINGDOC_SWAGGER_UI_PATH
+            # Swagger 환경 변수 추가
               valueFrom:
                 configMapKeyRef:
                   name: app-config
                   key: SPRINGDOC_SWAGGER_UI_PATH         
-            # - name: SERVER_FORWARD_HEADERS_STRATEGY
-            #   valueFrom:
-            #     configMapKeyRef:
-            #       name: app-config
-            #       key: SERVER_FORWARD_HEADERS_STRATEGY
-                  
           resources:
             requests:
               memory: 1Gi
