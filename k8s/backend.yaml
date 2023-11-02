@@ -78,7 +78,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: app-config
-                  key: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB                  
+                  key: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB
+            - name: SPRINGDOC_SWAGGER_UI_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: SPRINGDOC_SWAGGER_UI_PATH                  
           resources:
             requests:
               memory: 1Gi
