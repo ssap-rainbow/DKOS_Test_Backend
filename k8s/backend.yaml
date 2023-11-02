@@ -73,7 +73,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: app-config
-                  key: PROXY_PORT                  
+                  key: PROXY_PORT        
+            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB                  
           resources:
             requests:
               memory: 1Gi
