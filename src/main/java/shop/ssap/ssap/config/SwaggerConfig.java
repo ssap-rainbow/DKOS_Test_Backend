@@ -14,10 +14,18 @@ import org.springframework.context.annotation.Configuration;
 public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI() {
+    //     return new OpenAPI()
+    //             .info(new io.swagger.v3.oas.models.info.Info()
+    //                     .title("SSAP 심부름 플랫폼 API 명세서")
+    //                     .description("SSAP 심부름 플랫폼 API 명세서")
+    //                     .version("v1"));
+    // }
+        Info info = new Info()
+                .version("v1.0.0")
+                .title("Project 6s - IDE Project")
+                .description("this APIs are consist of ChatController and UserController");
+
         return new OpenAPI()
-                .info(new io.swagger.v3.oas.models.info.Info()
-                        .title("SSAP 심부름 플랫폼 API 명세서")
-                        .description("SSAP 심부름 플랫폼 API 명세서")
-                        .version("v1"));
-    }
+                .info(info);
+    }            
 }
