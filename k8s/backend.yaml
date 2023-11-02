@@ -85,7 +85,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: app-config
-                  key: SPRINGDOC_SWAGGER_UI_PATH         
+                  key: SPRINGDOC_SWAGGER_UI_PATH
+            - name: SPRINGDOC_API_DOCS_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: SPRINGDOC_API_DOCS_PATH                  
           resources:
             requests:
               memory: 1Gi
