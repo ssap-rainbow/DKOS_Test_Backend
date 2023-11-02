@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*") 
 @Controller
-// @Tag(name = "Home 컨트롤러", description = "HOME API입니다.")
+@Tag(name = "Home 컨트롤러", description = "HOME API입니다.")
 public class HomeController {
 
     private final SampleDataRepository sampleDataRepository;
