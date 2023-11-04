@@ -14,14 +14,15 @@ import shop.ssap.ssap.dto.KakaoDTO;
 
 @Service
 public class KakaoService {
-    @Value("${kakao.client.id}")
+    @Value("${kakao_client_id:default_client_id}")
     private String KAKAO_CLIENT_ID;
-
-    @Value("${kakao.client.secret}")
+    
+    @Value("${kakao_client_secret:default_client_secret}")
     private String KAKAO_CLIENT_SECRET;
-
-    @Value("${kakao.redirect.url}")
+    
+    @Value("${kakao_redirect_url:default_redirect_url}")
     private String KAKAO_REDIRECT_URL;
+
 
     private final static String KAKAO_AUTH_URI = "https://kauth.kakao.com";
     private final static String KAKAO_API_URI = "https://kapi.kakao.com";
