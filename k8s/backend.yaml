@@ -96,7 +96,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: app-config
-                  key: kakao_redirect_url
+                  key: KAKAO_REDIRECT_URL
             - name: KAKAO_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
