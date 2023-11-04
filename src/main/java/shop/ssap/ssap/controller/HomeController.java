@@ -58,8 +58,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import shop.ssap.ssap.service.KakaoService;
 
+@CrossOrigin(origins = "*") 
 @RequiredArgsConstructor
 @Controller
+@Tag(name = "Home 컨트롤러", description = "HOME API입니다.")
 public class HomeController {
 
     private final KakaoService kakaoService;
