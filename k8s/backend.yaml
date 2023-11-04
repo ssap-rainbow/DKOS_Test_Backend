@@ -100,12 +100,12 @@ spec:
             - name: KAKAO_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: kakao_credentials
+                  name: kakao-credentials
                   key: kakao_client_secret
             - name: KAKAO_CLIENT_ID
               valueFrom:
                 secretKeyRef:
-                  name: kakao_credentials
+                  name: kakao-credentials
                   key: kakao_client_id                  
           resources:
             requests:
