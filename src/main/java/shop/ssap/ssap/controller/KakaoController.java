@@ -13,7 +13,7 @@ import shop.ssap.ssap.service.KakaoService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("kakao")
+@RequestMapping("/api/kakao")
 public class KakaoController {
 
     private final RestTemplate restTemplate;
