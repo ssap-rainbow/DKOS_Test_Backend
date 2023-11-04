@@ -1,4 +1,4 @@
-package ssap.ssap.controller;
+package shop.ssap.ssap.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
