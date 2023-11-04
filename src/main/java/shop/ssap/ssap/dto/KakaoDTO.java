@@ -1,4 +1,4 @@
-package ssap.ssap.dto;
+package shop.ssap.ssap.dto;
 
 import lombok.Builder;
 import lombok.Data;
