@@ -101,12 +101,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: kakao-credentials
-                  key: kakao_client_secret
+                  key: KAKAO_CLIENT_SECRET
             - name: KAKAO_CLIENT_ID
               valueFrom:
                 secretKeyRef:
                   name: kakao-credentials
-                  key: kakao_client_id                  
+                  key: KAKAO_CLIENT_ID                  
           resources:
             requests:
               memory: 1Gi
