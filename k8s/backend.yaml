@@ -92,21 +92,21 @@ spec:
                   name: app-config
                   key: SPRINGDOC_API_DOCS_PATH    
             # 카카오 환경 변수 추가
-            - name: KAKAO_REDIRECT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: KAKAO_REDIRECT_URL
-            - name: KAKAO_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: kakao-credentials
-                  key: KAKAO_CLIENT_SECRET
-            - name: KAKAO_CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: kakao-credentials
-                  key: KAKAO_CLIENT_ID                  
+            # - name: KAKAO_REDIRECT_URL
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: app-config
+            #       key: KAKAO_REDIRECT_URL
+            # - name: KAKAO_CLIENT_SECRET
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: kakao-credentials
+            #       key: KAKAO_CLIENT_SECRET
+            # - name: KAKAO_CLIENT_ID
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: kakao-credentials
+            #       key: KAKAO_CLIENT_ID                  
           resources:
             requests:
               memory: 1Gi
