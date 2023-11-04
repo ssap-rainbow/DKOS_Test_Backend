@@ -43,54 +43,54 @@ spec:
                   name: db-credentials
                   key: password
             # AWS 환경 변수 수정
-            - name: AWS_S3_BUCKET
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: AWS_S3_BUCKET
-            - name: AWS_REGION
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: AWS_REGION
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: aws-credentials
-                  key: AWS_ACCESS_KEY_ID
-            - name: AWS_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: aws-credentials
-                  key: AWS_SECRET_ACCESS_KEY
-            # 프록시 환경 변수 추가
-            - name: PROXY_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: PROXY_HOST
-            - name: PROXY_PORT
-            # Logging 환경 변수 추가
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: PROXY_PORT        
-            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB
-            - name: SPRINGDOC_SWAGGER_UI_PATH
-            # Swagger 환경 변수 추가
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: SPRINGDOC_SWAGGER_UI_PATH
-            - name: SPRINGDOC_API_DOCS_PATH
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: SPRINGDOC_API_DOCS_PATH    
+            # - name: AWS_S3_BUCKET
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: app-config
+            #       key: AWS_S3_BUCKET
+            # - name: AWS_REGION
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: app-config
+            #       key: AWS_REGION
+            # - name: AWS_ACCESS_KEY_ID
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: aws-credentials
+            #       key: AWS_ACCESS_KEY_ID
+            # - name: AWS_SECRET_ACCESS_KEY
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: aws-credentials
+            #       key: AWS_SECRET_ACCESS_KEY
+            # # 프록시 환경 변수 추가
+            # - name: PROXY_HOST
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: app-config
+            #       key: PROXY_HOST
+            # - name: PROXY_PORT
+            # # Logging 환경 변수 추가
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: app-config
+            #       key: PROXY_PORT        
+            # - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: app-config
+            #       key: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB
+            # - name: SPRINGDOC_SWAGGER_UI_PATH
+            # # Swagger 환경 변수 추가
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: app-config
+            #       key: SPRINGDOC_SWAGGER_UI_PATH
+            # - name: SPRINGDOC_API_DOCS_PATH
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: app-config
+            #       key: SPRINGDOC_API_DOCS_PATH    
             # 카카오 환경 변수 추가
             # - name: KAKAO_REDIRECT_URL
             #   valueFrom:
