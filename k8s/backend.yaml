@@ -63,50 +63,50 @@ spec:
             #     secretKeyRef:
             #       name: aws-credentials
             #       key: AWS_SECRET_ACCESS_KEY
-            # # 프록시 환경 변수 추가
-            # - name: PROXY_HOST
-            #   valueFrom:
-            #     configMapKeyRef:
-            #       name: app-config
-            #       key: PROXY_HOST
-            # - name: PROXY_PORT
-            # # Logging 환경 변수 추가
-            #   valueFrom:
-            #     configMapKeyRef:
-            #       name: app-config
-            #       key: PROXY_PORT        
-            # - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB
-            #   valueFrom:
-            #     configMapKeyRef:
-            #       name: app-config
-            #       key: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB
-            # - name: SPRINGDOC_SWAGGER_UI_PATH
+            # 프록시 환경 변수 추가
+            - name: PROXY_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: PROXY_HOST
+            - name: PROXY_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: PROXY_PORT        
+            # Logging 환경 변수 추가
+            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB
+            - name: SPRINGDOC_SWAGGER_UI_PATH
             # # Swagger 환경 변수 추가
-            #   valueFrom:
-            #     configMapKeyRef:
-            #       name: app-config
-            #       key: SPRINGDOC_SWAGGER_UI_PATH
-            # - name: SPRINGDOC_API_DOCS_PATH
-            #   valueFrom:
-            #     configMapKeyRef:
-            #       name: app-config
-            #       key: SPRINGDOC_API_DOCS_PATH    
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: SPRINGDOC_SWAGGER_UI_PATH
+            - name: SPRINGDOC_API_DOCS_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: SPRINGDOC_API_DOCS_PATH    
             # 카카오 환경 변수 추가
-            # - name: KAKAO_REDIRECT_URL
-            #   valueFrom:
-            #     configMapKeyRef:
-            #       name: app-config
-            #       key: KAKAO_REDIRECT_URL
-            # - name: KAKAO_CLIENT_SECRET
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: kakao-credentials
-            #       key: KAKAO_CLIENT_SECRET
-            # - name: KAKAO_CLIENT_ID
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: kakao-credentials
-            #       key: KAKAO_CLIENT_ID                  
+            - name: KAKAO_REDIRECT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: KAKAO_REDIRECT_URL
+            - name: KAKAO_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: kakao-credentials
+                  key: KAKAO_CLIENT_SECRET
+            - name: KAKAO_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: kakao-credentials
+                  key: KAKAO_CLIENT_ID                  
           resources:
             requests:
               memory: 1Gi
