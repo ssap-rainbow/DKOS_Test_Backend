@@ -3,14 +3,16 @@ package shop.ssap.ssap.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+// import org.springframework.web.bind.annotation.GetMapping;
+// import org.springframework.web.bind.annotation.RequestMapping;
+// import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import shop.ssap.ssap.common.MsgEntity;
 import shop.ssap.ssap.dto.KakaoDTO;
 import shop.ssap.ssap.service.KakaoService;
 
+@CrossOrigin(origins = "*") 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/kakao")
