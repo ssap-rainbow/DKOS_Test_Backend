@@ -18,17 +18,8 @@ import shop.ssap.ssap.service.KakaoService;
 @RequestMapping("/api/kakao")
 public class KakaoController {
 
-    private final RestTemplate restTemplate;
-
     private final KakaoService kakaoService;
 
-    // @GetMapping("/callback")
-    // public ResponseEntity<MsgEntity> callback(HttpServletRequest request) throws Exception {
-    //     KakaoDTO kakaoInfo = kakaoService.getKakaoInfo(request.getParameter("code"));
-
-    //     return ResponseEntity.ok()
-    //             .body(new MsgEntity("Success", kakaoInfo));
-    // }
     @GetMapping("/callback")
     public ResponseEntity<KakaoDTO> callback(HttpServletRequest request) throws Exception {
         KakaoDTO kakaoInfo = kakaoService.getKakaoInfo(request.getParameter("code"));
