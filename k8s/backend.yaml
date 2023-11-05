@@ -106,12 +106,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: kakao-credentials
-                  key: KAKAO_CLIENT_ID              
-            - name: SPRING_RESOURCES_STATIC_LOCATIONS
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: SPRING_RESOURCES_STATIC_LOCATIONS                  
+                  key: KAKAO_CLIENT_ID                             
           resources:
             requests:
               memory: 1Gi
