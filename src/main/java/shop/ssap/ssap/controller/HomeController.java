@@ -68,13 +68,13 @@ public class HomeController {
 
     private final KakaoService kakaoService;
 
-    @RequestMapping(value="/api/home", method= RequestMethod.GET)
+    @RequestMapping(value="/api/kakao", method= RequestMethod.GET)
     public String login(Model model) {
         model.addAttribute("kakaoUrl", kakaoService.getKakaoLogin());
 
         return "index";
     }
-     @RequestMapping(value = "/api/hello", method = RequestMethod.GET)
+     @RequestMapping(value = "/api/home", method = RequestMethod.GET)
      @ResponseBody
      public String hello() {
          return "hello";
