@@ -22,11 +22,16 @@ public class KakaoController {
 
     private final KakaoService kakaoService;
 
-    @GetMapping("/callback")
-    public ResponseEntity<MsgEntity> callback(HttpServletRequest request) throws Exception {
-        KakaoDTO kakaoInfo = kakaoService.getKakaoInfo(request.getParameter("code"));
+    // @GetMapping("/callback")
+    // public ResponseEntity<MsgEntity> callback(HttpServletRequest request) throws Exception {
+    //     KakaoDTO kakaoInfo = kakaoService.getKakaoInfo(request.getParameter("code"));
 
-        return ResponseEntity.ok()
-                .body(new MsgEntity("Success", kakaoInfo));
-    }
+    //     return ResponseEntity.ok()
+    //             .body(new MsgEntity("Success", kakaoInfo));
+    // }
+    @GetMapping("/callback")
+    public ResponseEntity<KakaoDTO> callback(HttpServletRequest request) throws Exception {
+        KakaoDTO kakaoInfo = kakaoService.getKakaoInfo(request.getParameter("code"));
+        return ResponseEntity.ok(kakaoInfo); // 바로 kakaoInfo를 반환
+    }    
 }
