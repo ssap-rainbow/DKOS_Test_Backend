@@ -74,6 +74,12 @@ public class HomeController {
 
         return "index";
     }
+     @RequestMapping(value = "/api/hello", method = RequestMethod.GET)
+     @ResponseBody
+     public String hello() {
+         return "hello";
+     }
+        
 
 
 }
