@@ -68,7 +68,7 @@ public class HomeController {
 
     private final KakaoService kakaoService;
 
-    @RequestMapping(value="/api/kakao", method= RequestMethod.GET)
+    @RequestMapping(value="/api/kakao/home", method= RequestMethod.GET)
     public String login(Model model) {
         model.addAttribute("kakaoUrl", kakaoService.getKakaoLogin());
 
