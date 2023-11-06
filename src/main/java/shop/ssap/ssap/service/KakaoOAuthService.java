@@ -1,4 +1,4 @@
-package ssap.ssap.service;
+package shop.ssap.ssap.service;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import ssap.ssap.dto.Account;
-import ssap.ssap.dto.LoginResponseDto;
-import ssap.ssap.dto.OAuthDTO;
+import shop.ssap.ssap.dto.Account;
+import shop.ssap.ssap.dto.LoginResponseDto;
+import shop.ssap.ssap.dto.OAuthDTO;
 import org.json.JSONObject;
 
 @Service
