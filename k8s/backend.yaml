@@ -106,7 +106,17 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: kakao-credentials
-                  key: KAKAO_CLIENT_ID       
+                  key: KAKAO_CLIENT_ID  
+            - name: KAKAO_TOKEN_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: kakao.token-uri
+            - name: KAKAO_USER_INFO_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: kakao.user-info-uri
             - name: SPRING_MVC_STATIC_PATH_PATTERN
               value: "/resources/**"
             - name: SPRING_THYMELEAF_CACHE
