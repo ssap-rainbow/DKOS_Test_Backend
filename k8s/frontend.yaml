@@ -23,7 +23,7 @@ spec:
             # 카카오 환경 변수
             - name: KAKAO_CLIENT_ID
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: kakao-credentials
                   key: KAKAO_CLIENT_ID
             - name: KAKAO_REDIRECT_URL
