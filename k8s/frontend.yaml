@@ -21,16 +21,16 @@ spec:
 
           env:
             # 카카오 환경 변수
-            - name: KAKAO_CLIENT_ID
+            - name: REACT_APP_REST_API_KEY
               valueFrom:
                 secretKeyRef:
                   name: kakao-credentials
-                  key: KAKAO_CLIENT_ID
-            - name: KAKAO_REDIRECT_URL
+                  key: REACT_APP_REST_API_KEY
+            - name: REACT_APP_REDIRECT_URL
               valueFrom:
                 configMapKeyRef:
                   name: app-config
-                  key: KAKAO_REDIRECT_URL                  
+                  key: REACT_APP_REDIRECT_URL              
 ---
 apiVersion: v1
 kind: Service
