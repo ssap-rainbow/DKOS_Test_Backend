@@ -1,4 +1,4 @@
-package shop.ssap.ssap.config;
+package ssap.ssap.config;
 
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.HttpHost;
