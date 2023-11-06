@@ -17,7 +17,7 @@ spec:
       containers:
         - name: frontend
           # 여러분의 image 주소를 입력해주세요.
-          image: krmp-d2hub-idock.9rum.cc/dev-test/repo_a46cfe7a56c6
+          image: krmp-d2hub-idock.9rum.cc/dev-test/repo_8aedef856468
           env:
             # 카카오 환경 변수
             - name: REACT_APP_REST_API_KEY
