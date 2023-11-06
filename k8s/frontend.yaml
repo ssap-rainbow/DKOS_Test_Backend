@@ -18,6 +18,19 @@ spec:
         - name: frontend
           # 여러분의 image 주소를 입력해주세요.
           image: krmp-d2hub-idock.9rum.cc/dev-test/repo_36d0fc340a9d
+
+          env:
+            # 카카오 환경 변수
+            - name: KAKAO_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: kakao-credentials
+                  key: KAKAO_CLIENT_ID
+            - name: KAKAO_REDIRECT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: KAKAO_REDIRECT_URL                  
 ---
 apiVersion: v1
 kind: Service
