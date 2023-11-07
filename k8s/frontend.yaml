@@ -20,16 +20,16 @@ spec:
           image: krmp-d2hub-idock.9rum.cc/dev-test/repo_8aedef856468
           env:
             # 카카오 환경 변수
-            - name: REACT_APP_REST_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: kakao-credentials
-                  key: REACT_APP_REST_API_KEY
-            - name: REACT_APP_REDIRECT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: REACT_APP_REDIRECT_URL              
+            # - name: REACT_APP_REST_API_KEY
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: kakao-credentials
+            #       key: REACT_APP_REST_API_KEY
+            # - name: REACT_APP_REDIRECT_URL
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: app-config
+            #       key: REACT_APP_REDIRECT_URL              
 ---
 apiVersion: v1
 kind: Service
