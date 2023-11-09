@@ -149,34 +149,34 @@ public class KakaoOAuthService implements OAuthService {
     //     }
     // }
 
-    // private OAuthDTO requestAccessToken(String code) {
-    //     HttpHeaders headers = new HttpHeaders();
-    //     headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    private OAuthDTO requestAccessToken(String code) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-    //     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-    //     params.add("grant_type", "authorization_code");
-    //     params.add("client_id", clientId);
-    //     params.add("client_secret", clientSecret);
-    //     params.add("code", code);
-    //     params.add("redirect_uri", redirectUri);
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type", "authorization_code");
+        params.add("client_id", clientId);
+        params.add("client_secret", clientSecret);
+        params.add("code", code);
+        params.add("redirect_uri", redirectUri);
 
-    //     HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
-    //     ResponseEntity<String> response = restTemplate.exchange(
-    //             kakaoTokenUri,
-    //             HttpMethod.POST,
-    //             request,
-    //             String.class
-    //     );
+        ResponseEntity<String> response = restTemplate.exchange(
+                kakaoTokenUri,
+                HttpMethod.POST,
+                request,
+                String.class
+        );
 
-    //     JSONObject jsonObj = new JSONObject(response.getBody());
+        JSONObject jsonObj = new JSONObject(response.getBody());
 
-    //     OAuthDTO oauthInfo = new OAuthDTO();
-    //     oauthInfo.setAccessToken(jsonObj.getString("access_token"));
-    //     oauthInfo.setRefreshToken(jsonObj.optString("refresh_token"));
+        OAuthDTO oauthInfo = new OAuthDTO();
+        oauthInfo.setAccessToken(jsonObj.getString("access_token"));
+        oauthInfo.setRefreshToken(jsonObj.optString("refresh_token"));
 
-    //     return oauthInfo;
-    // }
+        return oauthInfo;
+    }
 
     @Transactional
     public User saveOrUpdateUser(OAuthDTO oauthInfo) {
