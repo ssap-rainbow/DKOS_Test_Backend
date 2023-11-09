@@ -3,6 +3,7 @@ package shop.ssap.ssap.service;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -111,6 +112,7 @@ public class KakaoOAuthService implements OAuthService {
                 return userRepository.save(newUser);
             }
         } catch (DataIntegrityViolationException e) {
+            log.error("Data integrity violation when attempting to save user - " + e.getMessage());
             // 데이터베이스 레벨의 유니크 제약 조건 위반이 발생하면 CustomDuplicateKeyException을 던집니다.
             throw new CustomDuplicateKeyException("Provider ID " + oauthInfo.getProviderId() + " already exists.");
         }
