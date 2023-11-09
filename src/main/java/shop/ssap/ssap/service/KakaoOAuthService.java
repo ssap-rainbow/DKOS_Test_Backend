@@ -13,7 +13,7 @@ import shop.ssap.ssap.domain.User;
 import shop.ssap.ssap.dto.Account;
 import shop.ssap.ssap.dto.LoginResponseDto;
 import shop.ssap.ssap.dto.OAuthDTO;
-import shop.org.json.JSONObject;
+import org.json.JSONObject;
 import shop.ssap.ssap.repository.UserRepository;
 
 import java.util.Optional;
