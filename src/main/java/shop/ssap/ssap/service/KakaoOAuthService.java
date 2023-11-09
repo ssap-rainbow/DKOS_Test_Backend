@@ -9,14 +9,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import shop.ssap.ssap.domain.User;
 import shop.ssap.ssap.dto.Account;
 import shop.ssap.ssap.dto.LoginResponseDto;
 import shop.ssap.ssap.dto.OAuthDTO;
-import org.json.JSONObject;
+import shop.org.json.JSONObject;
+import shop.ssap.ssap.repository.UserRepository;
+
+import java.util.Optional;
 
 @Service
 public class KakaoOAuthService implements OAuthService {
     private final RestTemplate restTemplate;
+    private final UserRepository userRepository;
 
     @Value("${KAKAO_CLIENT_ID:default_client_id}")
     private String clientId;
@@ -34,9 +39,11 @@ public class KakaoOAuthService implements OAuthService {
     private String kakaoUserInfoUri;
 
     @Autowired
-    public KakaoOAuthService(RestTemplate restTemplate) {
+    public KakaoOAuthService(RestTemplate restTemplate, UserRepository userRepository) {
         this.restTemplate = restTemplate;
+        this.userRepository = userRepository;
     }
+
 
     @Override
     public LoginResponseDto kakaoLogin(String provider, String code, HttpServletResponse response) {
@@ -44,12 +51,15 @@ public class KakaoOAuthService implements OAuthService {
 
         OAuthDTO userInfo = fetchUserInfo(oauthInfo.getAccessToken());
 
+        // OAuthDTO를 User 엔티티로 매핑하고 DB에 저장
+        User newUser = mapOAuthDTOToUserEntity(userInfo);
+        userRepository.save(newUser);
+
         LoginResponseDto loginResponse = new LoginResponseDto();
         //TODO: 나중에 DB 연동을 통해 기존 회원 여부에 따라 로그인 성공 여부 설정하도록 수정 필요
         loginResponse.setLoginSuccess(true);
 
         Account account = new Account();
-        account.setProviderId(userInfo.getProviderId());
         account.setUserName(userInfo.getUserName());
         account.setUserEmail(userInfo.getUserEmail());
         loginResponse.setAccount(account);
@@ -65,6 +75,27 @@ public class KakaoOAuthService implements OAuthService {
         loginResponse.setAccessToken(oauthInfo.getAccessToken());
 
         return loginResponse;
+    }
+
+    private User mapOAuthDTOToUserEntity(OAuthDTO oauthInfo) {
+        User user = new User();
+        user.setProviderId(oauthInfo.getProviderId());
+        user.setName(oauthInfo.getUserName());
+        user.setEmail(oauthInfo.getUserEmail());
+
+        return user;
+    }
+
+    private User saveOrUpdateUser(OAuthDTO oauthInfo) {
+        // 사용자가 데이터베이스에 이미 있는지 확인합니다.
+        Optional<User> existingUser = userRepository.findByProviderId(oauthInfo.getProviderId());
+
+        User user = existingUser.orElseGet(User::new);
+        user.setProviderId(oauthInfo.getProviderId());
+        user.setName(oauthInfo.getUserName());
+        user.setEmail(oauthInfo.getUserEmail());
+
+        return userRepository.save(user);
     }
 
     private OAuthDTO requestAccessToken(String code) {
