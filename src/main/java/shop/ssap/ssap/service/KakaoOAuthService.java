@@ -92,21 +92,25 @@ public class KakaoOAuthService implements OAuthService {
         // 사용자가 데이터베이스에 이미 있는지 확인합니다.
         Optional<User> existingUserOpt = userRepository.findByProviderId(oauthInfo.getProviderId());
 
-        if (existingUserOpt.isPresent()) {
-            // 기존 사용자 정보를 업데이트합니다.
-            User existingUser = existingUserOpt.get();
-            existingUser.setName(oauthInfo.getUserName());
-            existingUser.setEmail(oauthInfo.getUserEmail());
+        try {
+            if (existingUserOpt.isPresent()) {
+                // 기존 사용자 정보를 업데이트합니다.
+                User existingUser = existingUserOpt.get();
+                existingUser.setName(oauthInfo.getUserName());
+                existingUser.setEmail(oauthInfo.getUserEmail());
 
-            return userRepository.save(existingUser);
-        } else {
-            // 신규 사용자인 경우 데이터베이스에 추가합니다.
-            User newUser = new User();
-            newUser.setProviderId(oauthInfo.getProviderId());
-            newUser.setName(oauthInfo.getUserName());
-            newUser.setEmail(oauthInfo.getUserEmail());
+                return userRepository.save(existingUser);
+            } else {
+                User newUser = new User();
+                newUser.setProviderId(oauthInfo.getProviderId());
+                newUser.setName(oauthInfo.getUserName());
+                newUser.setEmail(oauthInfo.getUserEmail());
 
-            return userRepository.save(newUser);
+                return userRepository.save(newUser);
+            }
+        } catch (DataIntegrityViolationException e) {
+            // 데이터베이스 레벨의 유니크 제약 조건 위반이 발생하면 CustomDuplicateKeyException을 던집니다.
+            throw new CustomDuplicateKeyException("Provider ID " + oauthInfo.getProviderId() + " already exists.");
         }
     }
 
