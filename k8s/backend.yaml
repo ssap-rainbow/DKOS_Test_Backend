@@ -120,7 +120,12 @@ spec:
             - name: SPRING_MVC_STATIC_PATH_PATTERN
               value: "/resources/**"
             - name: SPRING_THYMELEAF_CACHE
-              value: "false"                  
+              value: "false"  
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: SPRING_JPA_HIBERNATE_DDL_AUTO              
           resources:
             requests:
               memory: 1Gi
