@@ -130,7 +130,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: app-config
-                  key: logging.level.root
+                  key: logging.level.root                  
             - name: LOGGING_LEVEL_SSAP_SSAP
               valueFrom:
                 configMapKeyRef:
