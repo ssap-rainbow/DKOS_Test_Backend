@@ -90,8 +90,12 @@ public class KakaoOAuthService implements OAuthService {
         // 사용자가 데이터베이스에 이미 있는지 확인합니다.
         Optional<User> existingUser = userRepository.findByProviderId(oauthInfo.getProviderId());
 
-        User user = existingUser.orElseGet(User::new);
-        user.setProviderId(oauthInfo.getProviderId());
+        User user = existingUser.orElseGet(() -> {
+            User newUser = new User();
+            newUser.setProviderId(oauthInfo.getProviderId()); // 새 사용자에만 providerId를 설정합니다.
+            return newUser;
+        });
+
         user.setName(oauthInfo.getUserName());
         user.setEmail(oauthInfo.getUserEmail());
 
