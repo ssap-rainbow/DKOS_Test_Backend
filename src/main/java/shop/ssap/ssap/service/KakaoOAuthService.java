@@ -49,57 +49,28 @@ public class KakaoOAuthService implements OAuthService {
         this.userRepository = userRepository;
     }
 
-
-    // @Override
-    // public LoginResponseDto kakaoLogin(String provider, String code, HttpServletResponse response) {
-    //     OAuthDTO oauthInfo = requestAccessToken(code);
-
-    //     OAuthDTO userInfo = fetchUserInfo(oauthInfo.getAccessToken());
-
-    //     // OAuthDTO를 User 엔티티로 매핑하고 DB에 저장
-    //     User newUser = mapOAuthDTOToUserEntity(userInfo);
-    //     userRepository.save(newUser);
-
-    //     LoginResponseDto loginResponse = new LoginResponseDto();
-    //     //TODO: 나중에 DB 연동을 통해 기존 회원 여부에 따라 로그인 성공 여부 설정하도록 수정 필요
-    //     loginResponse.setLoginSuccess(true);
-
-    //     Account account = new Account();
-    //     account.setUserName(userInfo.getUserName());
-    //     account.setUserEmail(userInfo.getUserEmail());
-    //     loginResponse.setAccount(account);
-
-    //     loginResponse.setAccessToken(oauthInfo.getAccessToken());
-
-    //     Cookie refreshTokenCookie = new Cookie("refreshToken", oauthInfo.getRefreshToken());
-    //     refreshTokenCookie.setHttpOnly(true);
-    //     refreshTokenCookie.setPath("/");
-    //     response.addCookie(refreshTokenCookie);
-
-    //     // 토큰 정보를 LoginResponseDto에 설정
-    //     loginResponse.setAccessToken(oauthInfo.getAccessToken());
-
-    //     return loginResponse;
-    // }
-
     @Override
     public LoginResponseDto kakaoLogin(String provider, String code, HttpServletResponse response) {
         OAuthDTO oauthInfo = requestAccessToken(code);
+
         OAuthDTO userInfo = fetchUserInfo(oauthInfo.getAccessToken());
 
         // 사용자 정보를 바탕으로 새로운 유저를 저장하거나 업데이트합니다.
         User user = saveOrUpdateUser(userInfo);
 
+        // OAuthDTO를 User 엔티티로 매핑하고 DB에 저장
+        User newUser = mapOAuthDTOToUserEntity(userInfo);
+        userRepository.save(newUser);
+
         LoginResponseDto loginResponse = new LoginResponseDto();
-        // DB 연동을 통해 기존 회원 여부에 따라 로그인 성공 여부 설정합니다.
+        //TODO: 나중에 DB 연동을 통해 기존 회원 여부에 따라 로그인 성공 여부 설정하도록 수정 필요
         loginResponse.setLoginSuccess(true);
 
         Account account = new Account();
-        account.setUserName(user.getName());
-        account.setUserEmail(user.getEmail());
+        account.setUserName(userInfo.getUserName());
+        account.setUserEmail(userInfo.getUserEmail());
         loginResponse.setAccount(account);
 
-        // 액세스 토큰과 리프레시 토큰을 설정합니다.
         loginResponse.setAccessToken(oauthInfo.getAccessToken());
 
         Cookie refreshTokenCookie = new Cookie("refreshToken", oauthInfo.getRefreshToken());
@@ -107,8 +78,11 @@ public class KakaoOAuthService implements OAuthService {
         refreshTokenCookie.setPath("/");
         response.addCookie(refreshTokenCookie);
 
+        // 토큰 정보를 LoginResponseDto에 설정
+        loginResponse.setAccessToken(oauthInfo.getAccessToken());
+
         return loginResponse;
-    }    
+    }
 
     private User mapOAuthDTOToUserEntity(OAuthDTO oauthInfo) {
         User user = new User();
@@ -119,35 +93,35 @@ public class KakaoOAuthService implements OAuthService {
         return user;
     }
 
-    // @Transactional
-    // public User saveOrUpdateUser(OAuthDTO oauthInfo) {
-    //     // 사용자가 데이터베이스에 이미 있는지 확인합니다.
-    //     Optional<User> existingUserOpt = userRepository.findByProviderId(oauthInfo.getProviderId());
+    @Transactional
+    public User saveOrUpdateUser(OAuthDTO oauthInfo) {
+        // 사용자가 데이터베이스에 이미 있는지 확인합니다.
+        Optional<User> existingUserOpt = userRepository.findByProviderId(oauthInfo.getProviderId());
 
-    //     try {
-    //         if (existingUserOpt.isPresent()) {
-    //             // 기존 사용자 정보를 업데이트합니다.
-    //             User existingUser = existingUserOpt.get();
-    //             existingUser.setName(oauthInfo.getUserName());
-    //             existingUser.setEmail(oauthInfo.getUserEmail());
-    //             log.debug("Updating existing user with provider ID: {}", existingUser.getProviderId());
+        try {
+            if (existingUserOpt.isPresent()) {
+                // 기존 사용자 정보를 업데이트합니다.
+                User existingUser = existingUserOpt.get();
+                existingUser.setName(oauthInfo.getUserName());
+                existingUser.setEmail(oauthInfo.getUserEmail());
 
-    //             return userRepository.save(existingUser);
-    //         } else {
-    //             User newUser = new User();
-    //             newUser.setProviderId(oauthInfo.getProviderId());
-    //             newUser.setName(oauthInfo.getUserName());
-    //             newUser.setEmail(oauthInfo.getUserEmail());
-    //             log.debug("Creating new user with provider ID: {}", oauthInfo.getProviderId());
+                return userRepository.save(existingUser);
+            } else {
+                User newUser = new User();
+                newUser.setProviderId(oauthInfo.getProviderId());
+                newUser.setName(oauthInfo.getUserName());
+                newUser.setEmail(oauthInfo.getUserEmail());
 
-    //             return userRepository.save(newUser);
-    //         }
-    //     } catch (DataIntegrityViolationException e) {
-    //         log.error("Data integrity violation when attempting to save user - " + e.getMessage());
-    //         // 데이터베이스 레벨의 유니크 제약 조건 위반이 발생하면 CustomDuplicateKeyException을 던집니다.
-    //         throw new CustomDuplicateKeyException("Provider ID " + oauthInfo.getProviderId() + " already exists.");
-    //     }
-    // }
+                return userRepository.save(newUser);
+            }
+        } catch (DataIntegrityViolationException e) {
+            log.error("Data integrity violation when attempting to save user - " + e.getMessage());
+            // 데이터베이스 레벨의 유니크 제약 조건 위반이 발생하면 CustomDuplicateKeyException을 던집니다.
+            throw new CustomDuplicateKeyException("Provider ID " + oauthInfo.getProviderId() + " already exists.");
+        }
+    }
+
+
 
     private OAuthDTO requestAccessToken(String code) {
         HttpHeaders headers = new HttpHeaders();
@@ -177,29 +151,6 @@ public class KakaoOAuthService implements OAuthService {
 
         return oauthInfo;
     }
-
-    @Transactional
-    public User saveOrUpdateUser(OAuthDTO oauthInfo) {
-        // 사용자가 데이터베이스에 이미 있는지 확인합니다.
-        Optional<User> existingUserOpt = userRepository.findByProviderId(oauthInfo.getProviderId());
-
-        try {
-            return existingUserOpt.map(user -> {
-                // 기존 사용자 정보를 업데이트합니다.
-                user.setName(oauthInfo.getUserName());
-                user.setEmail(oauthInfo.getUserEmail());
-                return userRepository.save(user);
-            }).orElseGet(() -> {
-                // 새로운 사용자를 만듭니다.
-                User newUser = mapOAuthDTOToUserEntity(oauthInfo);
-                return userRepository.save(newUser);
-            });
-        } catch (DataIntegrityViolationException e) {
-            log.error("Data integrity violation when attempting to save user - " + e.getMessage());
-            // 데이터베이스 레벨의 유니크 제약 조건 위반이 발생하면 CustomDuplicateKeyException을 던집니다.
-            throw new CustomDuplicateKeyException("Provider ID " + oauthInfo.getProviderId() + " already exists.");
-        }
-    }    
 
     private OAuthDTO fetchUserInfo(String accessToken) {
         HttpHeaders headers = new HttpHeaders();
