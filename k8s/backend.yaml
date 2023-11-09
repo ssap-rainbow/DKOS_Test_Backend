@@ -126,16 +126,16 @@ spec:
                 configMapKeyRef:
                   name: app-config
                   key: SPRING_JPA_HIBERNATE_DDL_AUTO    
-            - name: LOGGING_LEVEL_ROOT
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: logging.level.root                  
-            - name: LOGGING_LEVEL_SSAP_SSAP
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: logging.level.ssap.ssap                
+            # - name: LOGGING_LEVEL_ROOT
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: app-config
+            #       key: logging.level.root                  
+            # - name: LOGGING_LEVEL_SSAP_SSAP
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: app-config
+            #       key: logging.level.ssap.ssap                
           resources:
             requests:
               memory: 1Gi
