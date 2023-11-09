@@ -135,7 +135,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: app-config
-                  key: logging.level.ssap.ssap                  
+                  key: logging.level.ssap.ssap                
           resources:
             requests:
               memory: 1Gi
