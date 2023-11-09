@@ -86,20 +86,27 @@ public class KakaoOAuthService implements OAuthService {
         return user;
     }
 
-    private User saveOrUpdateUser(OAuthDTO oauthInfo) {
+    @Transactional
+    public User saveOrUpdateUser(OAuthDTO oauthInfo) {
         // 사용자가 데이터베이스에 이미 있는지 확인합니다.
-        Optional<User> existingUser = userRepository.findByProviderId(oauthInfo.getProviderId());
+        Optional<User> existingUserOpt = userRepository.findByProviderId(oauthInfo.getProviderId());
 
-        User user = existingUser.orElseGet(() -> {
+        if (existingUserOpt.isPresent()) {
+            // 기존 사용자 정보를 업데이트합니다.
+            User existingUser = existingUserOpt.get();
+            existingUser.setName(oauthInfo.getUserName());
+            existingUser.setEmail(oauthInfo.getUserEmail());
+
+            return userRepository.save(existingUser);
+        } else {
+            // 신규 사용자인 경우 데이터베이스에 추가합니다.
             User newUser = new User();
-            newUser.setProviderId(oauthInfo.getProviderId()); // 새 사용자에만 providerId를 설정합니다.
-            return newUser;
-        });
+            newUser.setProviderId(oauthInfo.getProviderId());
+            newUser.setName(oauthInfo.getUserName());
+            newUser.setEmail(oauthInfo.getUserEmail());
 
-        user.setName(oauthInfo.getUserName());
-        user.setEmail(oauthInfo.getUserEmail());
-
-        return userRepository.save(user);
+            return userRepository.save(newUser);
+        }
     }
 
     private OAuthDTO requestAccessToken(String code) {
