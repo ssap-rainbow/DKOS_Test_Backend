@@ -102,6 +102,7 @@ public class KakaoOAuthService implements OAuthService {
                 User existingUser = existingUserOpt.get();
                 existingUser.setName(oauthInfo.getUserName());
                 existingUser.setEmail(oauthInfo.getUserEmail());
+                log.info("Updating existing user with provider ID: {}", existingUser.getProviderId());
 
                 return userRepository.save(existingUser);
             } else {
@@ -109,6 +110,7 @@ public class KakaoOAuthService implements OAuthService {
                 newUser.setProviderId(oauthInfo.getProviderId());
                 newUser.setName(oauthInfo.getUserName());
                 newUser.setEmail(oauthInfo.getUserEmail());
+                log.info("Creating new user with provider ID: {}", oauthInfo.getProviderId());
 
                 return userRepository.save(newUser);
             }
