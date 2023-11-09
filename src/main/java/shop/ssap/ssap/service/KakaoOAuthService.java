@@ -59,8 +59,8 @@ public class KakaoOAuthService implements OAuthService {
         User user = saveOrUpdateUser(userInfo);
 
         // OAuthDTO를 User 엔티티로 매핑하고 DB에 저장
-        User newUser = mapOAuthDTOToUserEntity(userInfo);
-        userRepository.save(newUser);
+        // User newUser = mapOAuthDTOToUserEntity(userInfo);
+        // userRepository.save(newUser);
 
         LoginResponseDto loginResponse = new LoginResponseDto();
         //TODO: 나중에 DB 연동을 통해 기존 회원 여부에 따라 로그인 성공 여부 설정하도록 수정 필요
