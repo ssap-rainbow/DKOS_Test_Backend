@@ -125,7 +125,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: app-config
-                  key: SPRING_JPA_HIBERNATE_DDL_AUTO              
+                  key: SPRING_JPA_HIBERNATE_DDL_AUTO      
+            - name: LOGGING_LEVEL_SSAP_SSAP
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: LOGGING_LEVEL_SSAP_SSAP                  
           resources:
             requests:
               memory: 1Gi
