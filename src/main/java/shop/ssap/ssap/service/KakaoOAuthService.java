@@ -23,6 +23,7 @@ import shop.ssap.ssap.repository.UserRepository;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class KakaoOAuthService implements OAuthService {
     private final RestTemplate restTemplate;
     private final UserRepository userRepository;
