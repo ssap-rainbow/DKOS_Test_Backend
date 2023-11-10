@@ -107,7 +107,7 @@ public class KakaoOAuthService implements OAuthService {
 
                 // return userRepository.save(existingUser);
                 // 변경된 내용은 트랜잭션이 커밋되는 시점에 데이터베이스에 반영됩니다.
-                return existingUser;
+                return existingUserOpt.get();
                 // 기존 사용자가 이미 있으므로 아무런 업데이트도 하지 않고 반환합니다.
                 // return existingUserOpt.get();                
             } else {
