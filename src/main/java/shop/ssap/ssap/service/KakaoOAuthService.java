@@ -101,9 +101,9 @@ public class KakaoOAuthService implements OAuthService {
         try {
             if (existingUserOpt.isPresent()) {
                 // 기존 사용자 정보를 업데이트합니다.
-                User existingUser = existingUserOpt.get();
-                existingUser.setName(oauthInfo.getUserName());
-                existingUser.setEmail(oauthInfo.getUserEmail());
+                // User existingUser = existingUserOpt.get();
+                // existingUser.setName(oauthInfo.getUserName());
+                // existingUser.setEmail(oauthInfo.getUserEmail());
 
                 // return userRepository.save(existingUser);
                 // 변경된 내용은 트랜잭션이 커밋되는 시점에 데이터베이스에 반영됩니다.
