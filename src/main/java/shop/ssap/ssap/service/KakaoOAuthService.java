@@ -11,7 +11,9 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 import shop.ssap.ssap.domain.User;
 import shop.ssap.ssap.dto.Account;
 import shop.ssap.ssap.dto.LoginResponseDto;
@@ -43,6 +45,10 @@ public class KakaoOAuthService implements OAuthService {
     @Value("${kakao.user-info-uri:https://kapi.kakao.com/v2/user/me}")
     private String kakaoUserInfoUri;
 
+    @Value("${kakao.token-info-uri:https://kapi.kakao.com/v1/user/access_token_info}")
+    private String kakaoTokenInfoUri;
+
+
     @Autowired
     public KakaoOAuthService(RestTemplate restTemplate, UserRepository userRepository) {
         this.restTemplate = restTemplate;
@@ -54,13 +60,6 @@ public class KakaoOAuthService implements OAuthService {
         OAuthDTO oauthInfo = requestAccessToken(code);
 
         OAuthDTO userInfo = fetchUserInfo(oauthInfo.getAccessToken());
-
-        // 사용자 정보를 바탕으로 새로운 유저를 저장하거나 업데이트합니다.
-        User user = saveOrUpdateUser(userInfo);
-
-        // OAuthDTO를 User 엔티티로 매핑하고 DB에 저장
-        // User newUser = mapOAuthDTOToUserEntity(userInfo);
-        // userRepository.save(newUser);
 
         LoginResponseDto loginResponse = new LoginResponseDto();
         //TODO: 나중에 DB 연동을 통해 기존 회원 여부에 따라 로그인 성공 여부 설정하도록 수정 필요
@@ -100,18 +99,11 @@ public class KakaoOAuthService implements OAuthService {
 
         try {
             if (existingUserOpt.isPresent()) {
-                // 기존 사용자 정보를 업데이트합니다.
-                // User existingUser = existingUserOpt.get();
-                // existingUser.setName(oauthInfo.getUserName());
-                // existingUser.setEmail(oauthInfo.getUserEmail());
-
-                // return userRepository.save(existingUser);
-                // 변경된 내용은 트랜잭션이 커밋되는 시점에 데이터베이스에 반영됩니다.
-                // return existingUserOpt.get();
                 // 기존 사용자가 이미 있으므로 아무런 업데이트도 하지 않고 반환합니다.
-                return existingUserOpt.get();                
+                return existingUserOpt.get();
             } else {
-                User newUser = new User();
+                User newUser = mapOAuthDTOToUserEntity(oauthInfo);
+
                 newUser.setProviderId(oauthInfo.getProviderId());
                 newUser.setName(oauthInfo.getUserName());
                 newUser.setEmail(oauthInfo.getUserEmail());
@@ -119,13 +111,10 @@ public class KakaoOAuthService implements OAuthService {
                 return userRepository.save(newUser);
             }
         } catch (DataIntegrityViolationException e) {
-            log.error("Data integrity violation when attempting to save user - " + e.getMessage());
             // 데이터베이스 레벨의 유니크 제약 조건 위반이 발생하면 CustomDuplicateKeyException을 던집니다.
             throw new CustomDuplicateKeyException("Provider ID " + oauthInfo.getProviderId() + " already exists.");
         }
     }
-
-
 
     private OAuthDTO requestAccessToken(String code) {
         HttpHeaders headers = new HttpHeaders();
@@ -181,4 +170,39 @@ public class KakaoOAuthService implements OAuthService {
 
         return oauthInfo;
     }
+
+    public boolean isAccessTokenValid(String accessToken) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(accessToken);
+        HttpEntity<?> httpEntity = new HttpEntity<>(headers);
+
+        try {
+            restTemplate.exchange(kakaoTokenInfoUri, HttpMethod.GET, httpEntity, String.class);
+            return true; // 토큰이 유효한 경우
+        } catch (HttpClientErrorException e) {
+            log.error("액세스 토큰 유효성 검사 실패: {}", e.getMessage());
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "액세스 토큰이 유효하지 않거나 만료되었습니다.", e);
+        }
+    }
+
+    public String refreshAccessToken(String refreshToken) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type", "refresh_token");
+        params.add("client_id", clientId);
+        params.add("refresh_token", refreshToken);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(kakaoTokenUri, HttpMethod.POST, request, String.class);
+            JSONObject jsonObj = new JSONObject(response.getBody());
+            return jsonObj.getString("access_token"); // 새로운 액세스 토큰 반환
+        } catch (HttpClientErrorException e) {
+            log.error("액세스 토큰 갱신 실패: {}", e.getMessage());
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "액세스 토큰 갱신에 실패했습니다.", e);
+        }
+    }
+
+
 }
