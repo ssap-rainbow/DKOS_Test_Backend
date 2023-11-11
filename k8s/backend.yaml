@@ -121,12 +121,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: app-config
-                  key: kakao.token.info.url            
-            - name: SWAGGER_SERVER_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: swagger.server.url                           
+                  key: kakao.token.info.url                                    
             - name: SPRING_MVC_STATIC_PATH_PATTERN
               value: "/resources/**"
             - name: SPRING_THYMELEAF_CACHE
