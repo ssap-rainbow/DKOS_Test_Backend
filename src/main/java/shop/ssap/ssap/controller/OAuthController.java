@@ -76,6 +76,8 @@ public class OAuthController {
             @ApiResponse(responseCode = "401", description = "인증 실패 또는 토큰 만료"),
             @ApiResponse(responseCode = "500", description = "서버 내부 오류")
     })
+        }
+    }
     @PostMapping("/{provider}/logout")
     public ResponseEntity<?> logout(
             @Parameter(name = "provider", description = "OAuth 제공자", required = true) @PathVariable String provider,
@@ -84,8 +86,5 @@ public class OAuthController {
         String accessToken = authorizationHeader.substring("Bearer ".length());
         oauthService.logout(provider, accessToken);
         return ResponseEntity.ok(provider + " 로그아웃 성공");
-    }
-
-        }
-    }
+    }    
 }
