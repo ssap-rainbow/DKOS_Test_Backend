@@ -1,4 +1,4 @@
-package ssap.ssap.controller;
+package shop.ssap.ssap.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
