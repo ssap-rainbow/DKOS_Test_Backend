@@ -1,4 +1,4 @@
-package ssap.ssap.config;
+package shop.ssap.ssap.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
