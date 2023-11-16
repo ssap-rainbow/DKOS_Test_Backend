@@ -50,7 +50,7 @@ public class KakaoOAuthService implements OAuthService {
     private String kakaoTokenInfoUri;
 
     @Value("${kakao.api.base-url:https://kapi.kakao.com}")
-    private String kakaoApiBaseUrl;    
+    private String kakaoApiBaseUrl;
 
 
     @Autowired
@@ -225,7 +225,6 @@ public class KakaoOAuthService implements OAuthService {
         } catch (HttpClientErrorException e) {
             throw new CustomServiceException("카카오 로그아웃 중 오류가 발생했습니다.", e);
         }
-    }    
-
+    }
 
 }

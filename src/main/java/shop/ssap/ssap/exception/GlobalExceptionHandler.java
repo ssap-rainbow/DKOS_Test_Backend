@@ -20,7 +20,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CustomDuplicateKeyException.class)
     public ResponseEntity<?> handleCustomDuplicateKeyException(CustomDuplicateKeyException ex) {
-        // 한국어로 사용자에게 메시지를 반환합니다.
         String errorMessage = "해당 제공자 ID는 이미 사용 중입니다: " + ex.getMessage();
         return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
     }
