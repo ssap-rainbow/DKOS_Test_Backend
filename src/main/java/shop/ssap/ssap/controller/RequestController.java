@@ -33,29 +33,31 @@ public class RequestController {
     @Operation(summary = "Errand_Post Create", description = "게시글 생성을 위한 심부름 요청서를 작성한다.")
     @PostMapping("/request")
     public ResponseEntity<?> createErrandRequestForm(
-            @RequestHeader("Authorization") String authorizationHeader,
-            @Validated @RequestBody TaskRequestDto.CreateForm request, BindingResult bindingResult
-    ) {
-        if(bindingResult.hasErrors()) {
-            List<ErrorField> errors = bindingResult.getFieldErrors().stream()
-                    .map(error -> new ErrorField(error.getField()))
-                    .collect(Collectors.toList());
+        Task task = taskService.createPost(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new TaskRequestDto.CreateFormResponse("심부름 요청이 생성되었습니다.", task));
+    //         @RequestHeader("Authorization") String authorizationHeader,
+    //         @Validated @RequestBody TaskRequestDto.CreateForm request, BindingResult bindingResult
+    // ) {
+    //     if(bindingResult.hasErrors()) {
+    //         List<ErrorField> errors = bindingResult.getFieldErrors().stream()
+    //                 .map(error -> new ErrorField(error.getField()))
+    //                 .collect(Collectors.toList());
 
-            return ResponseEntity.badRequest().body(ErrorResponseDto.error("입력 값 검증 오류", errors));
-        }
+    //         return ResponseEntity.badRequest().body(ErrorResponseDto.error("입력 값 검증 오류", errors));
+    //     }
 
-        try {
-            String accessToken = authorizationHeader.substring("Bearer ".length());
-            boolean isValid = oauthService.isAccessTokenValid(accessToken);
-            if (isValid) {
-                Task task = taskService.createPost(request);
-                return ResponseEntity.status(HttpStatus.CREATED).body(new TaskRequestDto.CreateFormResponse("심부름 요청이 생성되었습니다.", task));
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("액세스 토큰이 유효하지 않거나 만료되었습니다.");
-            }
-        } catch (Exception e) {
-            log.error("Exception e", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorResponseDto.error("요청을 처리하는 중에 서버에서 오류가 발생했습니다.", ""));
-        }
-    }
+    //     try {
+    //         String accessToken = authorizationHeader.substring("Bearer ".length());
+    //         boolean isValid = oauthService.isAccessTokenValid(accessToken);
+    //         if (isValid) {
+    //             Task task = taskService.createPost(request);
+    //             return ResponseEntity.status(HttpStatus.CREATED).body(new TaskRequestDto.CreateFormResponse("심부름 요청이 생성되었습니다.", task));
+    //         } else {
+    //             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("액세스 토큰이 유효하지 않거나 만료되었습니다.");
+    //         }
+    //     } catch (Exception e) {
+    //         log.error("Exception e", e);
+    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorResponseDto.error("요청을 처리하는 중에 서버에서 오류가 발생했습니다.", ""));
+    //     }
+    // }
 }
