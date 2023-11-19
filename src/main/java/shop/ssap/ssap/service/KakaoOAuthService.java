@@ -67,12 +67,20 @@ public class KakaoOAuthService implements OAuthService {
 
         LoginResponseDto loginResponse = new LoginResponseDto();
         //TODO: 나중에 DB 연동을 통해 기존 회원 여부에 따라 로그인 성공 여부 설정하도록 수정 필요
-        loginResponse.setLoginSuccess(true);
+        // loginResponse.setLoginSuccess(true);
+
+        // Account account = new Account();
+        // account.setUserName(userInfo.getUserName());
+        // account.setUserEmail(userInfo.getUserEmail());
+        // loginResponse.setAccount(account);
+
+        User user = saveOrUpdateUser(userInfo);
 
         Account account = new Account();
-        account.setUserName(userInfo.getUserName());
-        account.setUserEmail(userInfo.getUserEmail());
+        account.setUserName(user.getName());
+        account.setUserEmail(user.getEmail());
         loginResponse.setAccount(account);
+        loginResponse.setLoginSuccess(true);        
 
         loginResponse.setAccessToken(oauthInfo.getAccessToken());
 
